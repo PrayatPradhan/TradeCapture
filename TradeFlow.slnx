@@ -1,0 +1,22 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/TradeFlow.Api/TradeFlow.Api.csproj" Id="ebe3b14c-f70a-4133-9f17-1c3a8472ca72" />
+    <Project Path="src/TradeFlow.Application/TradeFlow.Application.csproj" Id="975e8227-b6a3-4dec-b3ae-554c0a0b63c3" />
+    <Project Path="src/TradeFlow.Domain/TradeFlow.Domain.csproj" Id="1c33bdf8-6814-4ab4-a346-275d82757ae3" />
+    <Project Path="src/TradeFlow.Infrastructure/TradeFlow.Infrastructure.csproj" Id="9108a700-59e7-4a4d-994b-999e75c32dd8" />
+    <Project Path="src/TradeFlow.Worker/TradeFlow.Worker.csproj" Id="760222d4-2ce7-4c8a-97e1-cd6251b7f960" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/TradeFlow.Api.IntegrationTests/TradeFlow.Api.IntegrationTests.csproj" Id="d419e6e8-2bc4-4cb3-bc6b-16637f58e7c7" />
+    <Project Path="tests/TradeFlow.Application.Tests/TradeFlow.Application.Tests.csproj" Id="6df312f0-d2f6-4243-87c7-8a10f4805d96" />
+    <Project Path="tests/TradeFlow.Architecture.Tests/TradeFlow.Architecture.Tests.csproj" Id="67c3bf8a-670d-4836-aea1-8854d022944c" />
+    <Project Path="tests/TradeFlow.Domain.Tests/TradeFlow.Domain.Tests.csproj" Id="913322bc-cc54-4982-bb39-f5f96c30952f" />
+  </Folder>
+</Solution>

@@ -1,0 +1,4 @@
+# C# specific settings
+[*.cs]
+# Test names use Method_Scenario_ExpectedResult, so underscores are intentional
+dotnet_diagnostic.CA1707.severity = none

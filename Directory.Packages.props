@@ -4,5 +4,14 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
+      <!-- Test stack -->
+      <PackageVersion Include="coverlet.collector" Version="6.0.4" />
+      <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.0" />
+      <PackageVersion Include="NUnit" Version="4.3.2" />
+      <PackageVersion Include="NUnit.Analyzers" Version="4.7.0" />
+      <PackageVersion Include="NUnit3TestAdapter" Version="5.0.0" />
+      <!-- Hosting -->
+      <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="10.0.12" />
+      <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.12" />
   </ItemGroup>
 </Project>

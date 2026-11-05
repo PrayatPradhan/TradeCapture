@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <UserSecretsId>dotnet-TradeFlow.Worker-b88fe47d-5b20-49b8-b71f-1e454735872d</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TradeFlow.Application\TradeFlow.Application.csproj" />
+    <ProjectReference Include="..\TradeFlow.Infrastructure\TradeFlow.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>

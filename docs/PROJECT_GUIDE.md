@@ -26,27 +26,27 @@ Why this project: the target role covers backend logic in a long-lived enterpris
 
 ## 2. Finance primer
 
-| Term | Meaning | Where it appears in the code |
-|---|---|---|
-| Portfolio | A collection of holdings managed together | `Portfolio` entity |
-| Instrument | Something tradable: equity, bond, FX pair | `Instrument` entity |
-| ISIN | 12-char global instrument ID (2-letter country, 9 alphanumerics, 1 check digit) | `Isin` value object |
-| Trade | One buy or sell: instrument, side, quantity, price, currency, trade date, settlement date | `Trade` aggregate |
-| Trade date (T) | Day the deal is agreed | `Trade.TradeDate` |
-| Settlement date | Day cash and securities actually swap, usually T+1 or T+2 business days | `SettlementDateCalculator` |
-| Counterparty | The other side of the trade | `Trade.Counterparty` |
-| Position | Quantity of an instrument held in a portfolio, derived from trades | `Position` aggregate |
-| Lot | A purchased chunk with its own quantity and price, used for cost tracking | `Lot` |
-| Cost basis | What you paid for what you still hold | `Position.CostBasis` |
-| FIFO | First-in-first-out: sells consume the oldest lots first | `Position.ApplySell` |
-| Realized P&L | Profit/loss locked in by selling | returned by `ApplySell` |
-| Unrealized P&L | Profit/loss on what you still hold, at current market price | `ValuationService` |
-| FX rate | Price of one currency in another, used to convert to a reporting currency | `IFxRateProvider` |
-| Valuation | Position quantity × market price, converted to reporting currency | `ValuationService` |
-| Confirmation | Both sides agree the trade details match | `Confirm` command |
-| Settlement break / fail | Settlement did not happen as expected (seller didn't deliver) | `Failed` status |
-| Reconciliation | Comparing your records to the custodian's to find breaks | stretch goal |
-| Audit trail | Immutable history of who changed what and when | `audit_events` table |
+| Term                    | Meaning                                                                                   | Where it appears in the code |
+|-------------------------|-------------------------------------------------------------------------------------------|------------------------------|
+| Portfolio               | A collection of holdings managed together                                                 | `Portfolio` entity           |
+| Instrument              | Something tradable: equity, bond, FX pair                                                 | `Instrument` entity          |
+| ISIN                    | 12-char global instrument ID (2-letter country, 9 alphanumerics, 1 check digit)           | `Isin` value object          |
+| Trade                   | One buy or sell: instrument, side, quantity, price, currency, trade date, settlement date | `Trade` aggregate            |
+| Trade date (T)          | Day the deal is agreed                                                                    | `Trade.TradeDate`            |
+| Settlement date         | Day cash and securities actually swap, usually T+1 or T+2 business days                   | `SettlementDateCalculator`   |
+| Counterparty            | The other side of the trade                                                               | `Trade.Counterparty`         |
+| Position                | Quantity of an instrument held in a portfolio, derived from trades                        | `Position` aggregate         |
+| Lot                     | A purchased chunk with its own quantity and price, used for cost tracking                 | `Lot`                        |
+| Cost basis              | What you paid for what you still hold                                                     | `Position.CostBasis`         |
+| FIFO                    | First-in-first-out: sells consume the oldest lots first                                   | `Position.ApplySell`         |
+| Realized P&L            | Profit/loss locked in by selling                                                          | returned by `ApplySell`      |
+| Unrealized P&L          | Profit/loss on what you still hold, at current market price                               | `ValuationService`           |
+| FX rate                 | Price of one currency in another, used to convert to a reporting currency                 | `IFxRateProvider`            |
+| Valuation               | Position quantity × market price, converted to reporting currency                         | `ValuationService`           |
+| Confirmation            | Both sides agree the trade details match                                                  | `Confirm` command            |
+| Settlement break / fail | Settlement did not happen as expected (seller didn't deliver)                             | `Failed` status              |
+| Reconciliation          | Comparing your records to the custodian's to find breaks                                  | stretch goal                 |
+| Audit trail             | Immutable history of who changed what and when                                            | `audit_events` table         |
 
 ### Worked example (use this as a test fixture)
 

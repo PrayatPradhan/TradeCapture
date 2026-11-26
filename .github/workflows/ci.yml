@@ -1,0 +1,81 @@
+# CI workflow: builds and tests TradeFlow on every push to main and every pull request.
+# GitHub finds workflows only in .github/workflows/*.yml.
+name: CI
+
+on:
+  # Runs when code is pushed to main (e.g. after a PR is merged).
+  push:
+    branches: [main]
+  # Runs for every pull request targeting main. Pushing to a feature branch
+  # does NOT run it by itself, so a branch with an open PR is built only once.
+  pull_request:
+    branches: [main]
+
+# Least privilege: the workflow token can only read the repository.
+permissions:
+  contents: read
+
+# If a new commit is pushed while a run is still going on the same branch/PR,
+# cancel the old run. It is outdated and would waste minutes.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Stops the .NET CLI printing first-run banners and sending telemetry.
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15   # a hung job fails after 15 minutes instead of running for hours
+
+    steps:
+      # 1. Get the code onto the runner (a fresh, empty machine each time).
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      # 2. Install the .NET SDK. Reading the version from global.json means the
+      #    version is defined in one place and CI matches your machine.
+      #    cache: true stores the NuGet package cache between runs. There are no
+      #    lock files in this repo, so the cache key is built from the files that
+      #    decide which packages are needed: the central versions and the projects.
+      - name: Set up .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+          cache: true
+          cache-dependency-path: |
+            Directory.Packages.props
+            **/*.csproj
+
+      # 3. Download NuGet packages.
+      - name: Restore
+        run: dotnet restore TradeFlow.slnx
+
+      # 4. Compile. Warnings are errors (Directory.Build.props), so this step
+      #    also acts as the quality gate. --no-restore reuses step 3's work.
+      - name: Build
+        run: dotnet build TradeFlow.slnx --configuration Release --no-restore
+
+      # 5. Run all tests against the binaries from step 4 (--no-build).
+      #    The TRX logger writes machine-readable results to ./TestResults.
+      - name: Test
+        run: >
+          dotnet test TradeFlow.slnx
+          --configuration Release
+          --no-build
+          --logger "trx"
+          --results-directory ./TestResults
+
+      # 6. Keep the test results as a downloadable artifact on the run page.
+      #    if: always() uploads them even when tests fail, which is exactly
+      #    when you want to read them.
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: TestResults/**/*.trx
+          if-no-files-found: warn
